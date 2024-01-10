@@ -29,47 +29,45 @@ export default function Dashboard() {
     getDashboardCourses,
     { isLoading, isSuccess: dashboardCoursesSuccess, error },
   ] = useGetDashboardCoursesMutation();
-  getDashboardCourses(userId);
 
-  // useLayoutEffect(() => {
-  //   const token = window.localStorage.getItem(TOKEN);
+  useLayoutEffect(() => {
+    const token = window.localStorage.getItem(TOKEN);
 
-  //   const redirectToSignIn = () => {
-  //     window.localStorage.removeItem(TOKEN);
-  //     router.push("/sign-in");
-  //   };
+    const redirectToSignIn = () => {
+      window.localStorage.removeItem(TOKEN);
+      router.push("/sign-in");
+    };
 
-  //   const checkToken = async () => {
-  //     try {
-  //       if (token && !accessToken) {
-  //         const payload = await validateToken(token);
+    const checkToken = async () => {
+      try {
+        if (token && !accessToken) {
+          const payload = await validateToken(token);
 
-  //         if (tokenValidationSuccess) {
-  //           getDashboardCourses(userId);
-  //         }
-  //       } else if (
-  //         !token &&
-  //         !["/sign-in", "/sign-up"].includes(pathname) &&
-  //         !accessToken
-  //       ) {
-  //         redirectToSignIn();
-  //       }
-  //     } catch (error) {
-  //       redirectToSignIn();
-  //       console.error("rejected", error);
-  //     }
-  //   };
+          if (tokenValidationSuccess) {
+            getDashboardCourses;
+          }
+        } else if (
+          !token &&
+          !["/sign-in", "/sign-up"].includes(pathname) &&
+          !accessToken
+        ) {
+          redirectToSignIn();
+        }
+      } catch (error) {
+        redirectToSignIn();
+        console.error("rejected", error);
+      }
+    };
 
-  //   checkToken();
-  // }, [
-  //   accessToken,
-  //   getDashboardCourses,
-  //   pathname,
-  //   router,
-  //   tokenValidationSuccess,
-  //   userId,
-  //   validateToken,
-  // ]);
+    checkToken();
+  }, [
+    accessToken,
+    getDashboardCourses,
+    pathname,
+    router,
+    tokenValidationSuccess,
+    validateToken,
+  ]);
 
   const { completedCourses, coursesInProgress } =
     useAppSelector(selectDashboardData);
