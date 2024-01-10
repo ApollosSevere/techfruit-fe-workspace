@@ -9,7 +9,7 @@ import { CoursesList } from "@/components/courses-list";
 import { InfoCard } from "./_components/info-card";
 import { selectAccessToken, selectUserId } from "@/redux/auth/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
-import { useGetDashboardCoursesQuery } from "@/redux/courses/service/courseServiceEndpoints";
+import { useGetDashboardCoursesMutation } from "@/redux/courses/service/courseServiceEndpoints";
 import { selectDashboardData } from "@/redux/courses/slice/selector";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
 import { TOKEN } from "@/redux/auth/slice";
@@ -22,7 +22,13 @@ export default function Dashboard() {
   const router = useRouter();
   const pathname = usePathname();
   const accessToken = useAppSelector(selectAccessToken);
-  const [validateToken] = useValidateTokenMutation();
+  const [validateToken, { isSuccess: tokenValidationSuccess }] =
+    useValidateTokenMutation();
+
+  const [
+    getDashboardCourses,
+    { isLoading, isSuccess: dashboardCoursesSuccess, error },
+  ] = useGetDashboardCoursesMutation();
 
   useLayoutEffect(() => {
     const token = window.localStorage.getItem(TOKEN);
@@ -35,7 +41,11 @@ export default function Dashboard() {
     const checkToken = async () => {
       try {
         if (token && !accessToken) {
-          const payload = await validateToken(token).unwrap();
+          const payload = await validateToken(token);
+
+          if (tokenValidationSuccess) {
+            getDashboardCourses(userId);
+          }
         } else if (
           !token &&
           !["/sign-in", "/sign-up"].includes(pathname) &&
@@ -50,11 +60,15 @@ export default function Dashboard() {
     };
 
     checkToken();
-  }, [accessToken, pathname, router, validateToken]);
-
-  const { isLoading } = useGetDashboardCoursesQuery(userId, {
-    refetchOnMountOrArgChange: true,
-  });
+  }, [
+    accessToken,
+    getDashboardCourses,
+    pathname,
+    router,
+    tokenValidationSuccess,
+    userId,
+    validateToken,
+  ]);
 
   const { completedCourses, coursesInProgress } =
     useAppSelector(selectDashboardData);

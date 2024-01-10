@@ -150,7 +150,7 @@ export const coursesApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    getDashboardCourses: builder.query({
+    getDashboardCourses: builder.mutation({
       query: (userId) => ({
         url: `course/${userId}/getDashboard`,
         method: "GET",
@@ -259,7 +259,7 @@ export const {
   useFindCourseByPublishedChaptersQuery,
   useFindCourseByPublishedChaptersAndUserIdQuery,
   useAddPurchaseMutation,
-  useGetDashboardCoursesQuery,
+  useGetDashboardCoursesMutation,
   useGetPublishedCoursesQuery,
   useGetAnalyticsCalculationQuery,
   useGetAllCategoriesQuery,
