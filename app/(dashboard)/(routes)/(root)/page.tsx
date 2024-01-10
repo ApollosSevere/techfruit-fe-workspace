@@ -1,7 +1,7 @@
 "use client";
 
 // import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { CheckCircle, Clock } from "lucide-react";
 
 import { CoursesList } from "@/components/courses-list";
@@ -12,9 +12,45 @@ import { useAppSelector } from "@/redux/utils/hooks";
 import { useGetDashboardCoursesQuery } from "@/redux/courses/service/courseServiceEndpoints";
 import { selectDashboardData } from "@/redux/courses/slice/selector";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
+import { TOKEN } from "@/redux/auth/slice";
+import { useRouter } from "next/navigation";
+import { useLayoutEffect } from "react";
+import { useValidateTokenMutation } from "@/redux/authService/authServiceEndpoints";
 
 export default function Dashboard() {
   const userId = useAppSelector(selectUserId);
+  const router = useRouter();
+  const pathname = usePathname();
+  const accessToken = useAppSelector(selectAccessToken);
+  const [validateToken] = useValidateTokenMutation();
+
+  useLayoutEffect(() => {
+    const token = window.localStorage.getItem(TOKEN);
+
+    const redirectToSignIn = () => {
+      window.localStorage.removeItem(TOKEN);
+      router.push("/sign-in");
+    };
+
+    const checkToken = async () => {
+      try {
+        if (token && !accessToken) {
+          const payload = await validateToken(token).unwrap();
+        } else if (
+          !token &&
+          !["/sign-in", "/sign-up"].includes(pathname) &&
+          !accessToken
+        ) {
+          redirectToSignIn();
+        }
+      } catch (error) {
+        redirectToSignIn();
+        console.error("rejected", error);
+      }
+    };
+
+    checkToken();
+  }, [accessToken, pathname, router, validateToken]);
 
   const { isLoading } = useGetDashboardCoursesQuery(userId, {
     refetchOnMountOrArgChange: true,
