@@ -19,7 +19,7 @@ export default function Children({ children }: { children: React.ReactNode }) {
   const [validateToken] = useValidateTokenMutation();
 
   // TODO: make into a mutation so that it is not ran in no token is there
-  useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  // useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
 
   useLayoutEffect(() => {
     const token = window.localStorage.getItem(TOKEN);
