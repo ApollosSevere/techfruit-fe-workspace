@@ -1,5 +1,3 @@
-"use client";
-
 // import { auth } from "@clerk/nextjs";
 import { redirect, usePathname } from "next/navigation";
 import { CheckCircle, Clock } from "lucide-react";
