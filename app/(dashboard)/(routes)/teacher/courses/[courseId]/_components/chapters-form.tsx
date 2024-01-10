@@ -8,7 +8,6 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter, Course } from "@prisma/client";
 
 import {
   Form,
@@ -26,6 +25,7 @@ import {
   useCreateChapterMutation,
   useUpdateChapterPositionsMutation,
 } from "@/redux/courses/service/courseServiceEndpoints";
+import { Course, Chapter } from "@/redux/courses/slice/types";
 
 interface ChaptersFormProps {
   initialData: Course & { chapters: Chapter[] };

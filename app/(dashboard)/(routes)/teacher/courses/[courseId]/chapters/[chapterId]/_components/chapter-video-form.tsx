@@ -7,13 +7,13 @@ import { Pencil, PlusCircle, Video } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter, MuxData } from "@prisma/client";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useEditChapterMutation } from "@/redux/courses/service/courseServiceEndpoints";
 import Mux from "@mux/mux-node";
+import { Chapter, MuxData } from "@/redux/courses/slice/types";
 
 export const { Video: VideoData } = new Mux(
   "27c94df7-b013-443b-8a49-f81059489017",

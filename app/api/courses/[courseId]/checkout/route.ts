@@ -5,11 +5,6 @@ import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import Mux from "@mux/mux-node";
 
-export const { Video: VideoData } = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!,
-);
-
 export async function POST(
   req: Request,
   { params }: { params: { courseId: string } }

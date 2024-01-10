@@ -1,12 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Attachment, Chapter, Course, Purchase } from ".prisma/client";
 import { coursesApi } from "../service/courseServiceEndpoints";
-import { UserProgress } from "@prisma/client";
 
-import {
-  SignedInAuthObject,
-  SignedOutAuthObject,
-} from "@clerk/nextjs/dist/types/server";
+import { Course, Category, Chapter } from "./types";
 // & {
 //     chapters: (Chapter & {
 //       userProgress: UserProgress[] | null;
@@ -21,27 +16,7 @@ export type AnalyticsCalc = {
   totalSales: number;
 };
 
-export type Category = {
-  id: string;
-  name: string;
-};
-
-export type ChapterType = Chapter & {
-  userProgress: UserProgress[] | null;
-  muxData: {
-    assetId: string;
-    playbackId: string;
-  };
-};
-export type CourseType = Course & {
-  attachments: Attachment[];
-  chapters: ChapterType[];
-  purchases: Purchase[];
-  progress: number | null;
-  category: Category | null;
-};
-
-export const chapterInitialState = {
+export const chapterInitialState: Chapter = {
   id: "",
   title: "",
   description: "",
@@ -52,15 +27,23 @@ export const chapterInitialState = {
   courseId: "",
   createdAt: new Date(),
   updatedAt: new Date(),
+  muxData: {
+    id: "",
+    assetId: "",
+    playbackId: "",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  userProgress: [],
 };
 
 interface CourseState {
-  currentCourse: CourseType;
-  dashboardCourses: CourseType[];
+  currentCourse: Course;
+  dashboardCourses: Course[];
   analyticsCalculation: AnalyticsCalc;
   categories: Category[];
-  // completedCourses: CourseType[];
-  // coursesInProgress: CourseType[];
+  // completedCourses: Course[];
+  // coursesInProgress: Course[];
 }
 
 export const initialCourseState: CourseState = {
@@ -73,10 +56,13 @@ export const initialCourseState: CourseState = {
     title: "string",
     description: "string",
     imageUrl: "",
-    price: null,
+    price: 0,
     isPublished: false,
     categoryId: null,
-    category: null,
+    category: {
+      id: "",
+      name: "",
+    },
     progress: 0,
     chapters: [],
     attachments: [],
@@ -155,10 +141,17 @@ const courseSlice = createSlice({
 
     builder.addMatcher(
       coursesApi.endpoints.getDashboardCourses.matchFulfilled,
-      (state, action: PayloadAction<CourseType[]>) => {
+      (state, action: PayloadAction<Course[]>) => {
         state.dashboardCourses = action.payload;
       }
     );
+
+    // builder.addMatcher(
+    //   coursesApi.endpoints.getPublishedCourses.matchFulfilled,
+    //   (state, action: PayloadAction<Course[]>) => {
+    //     state.dashboardCourses = action.payload;
+    //   }
+    // );
 
     builder.addMatcher(
       coursesApi.endpoints.getAnalyticsCalculation.matchFulfilled,

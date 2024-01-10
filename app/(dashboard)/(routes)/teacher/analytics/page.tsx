@@ -2,8 +2,6 @@
 "use client";
 import { redirect } from "next/navigation";
 
-import { getAnalytics } from "@/actions/get-analytics";
-
 import { DataCard } from "./_components/data-card";
 import { Chart } from "./_components/chart";
 import { useGetAnalyticsCalculationQuery } from "@/redux/courses/service/courseServiceEndpoints";
@@ -13,18 +11,6 @@ import { selectAnalytics } from "@/redux/courses/slice/selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
 
 const AnalyticsPage = () => {
-  // const { userId } = auth();
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  // const {
-  //   data,
-  //   totalRevenue,
-  //   totalSales,
-  // } = await getAnalytics(userId);
-
   const userId = useAppSelector(selectUserId);
 
   const { isLoading } = useGetAnalyticsCalculationQuery(

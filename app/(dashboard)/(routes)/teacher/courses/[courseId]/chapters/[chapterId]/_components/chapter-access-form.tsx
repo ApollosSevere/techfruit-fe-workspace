@@ -8,7 +8,6 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter } from "@prisma/client";
 
 import {
   Form,
@@ -27,6 +26,7 @@ import {
   useEditChapterMutation,
   useEditCourseMutation,
 } from "@/redux/courses/service/courseServiceEndpoints";
+import { Chapter } from "@/redux/courses/slice/types";
 
 interface ChapterAccessFormProps {
   initialData: Chapter;

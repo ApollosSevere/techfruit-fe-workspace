@@ -8,7 +8,6 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
 
 import {
   Form,
@@ -22,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
 import { useEditCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
+import { Course } from "@/redux/courses/slice/types";
 
 interface CategoryFormProps {
   initialData: Course;

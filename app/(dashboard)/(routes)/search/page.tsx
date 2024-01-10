@@ -5,14 +5,12 @@
 
 import { db } from "@/lib/db";
 import { SearchInput } from "@/components/search-input";
-import { getCourses } from "@/actions/get-courses";
 import {
   CoursesList,
   CourseWithProgressWithCategory,
 } from "@/components/courses-list";
 
 import { Categories } from "./_components/categories";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
 import {
   useGetAllCategoriesQuery,
   useGetAllCoursesQuery,
@@ -25,6 +23,7 @@ import {
   selectAllCategories,
 } from "@/redux/courses/slice/selector";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
+import { Course } from "@/redux/courses/slice/types";
 
 interface SearchPageProps {
   searchParams: {
@@ -47,7 +46,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
     { refetchOnMountOrArgChange: true }
   );
 
-  const courses: CourseType[] = addProgress(data, userId?.toString());
+  const courses: Course[] = addProgress(data, userId?.toString());
 
   return (
     <>

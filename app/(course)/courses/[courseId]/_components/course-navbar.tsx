@@ -1,12 +1,10 @@
-import { Chapter, Course, UserProgress } from "@prisma/client";
-
 import { NavbarRoutes } from "@/components/navbar-routes";
+import { Course } from "@/redux/courses/slice/types";
 
 import { CourseMobileSidebar } from "./course-mobile-sidebar";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
 
 interface CourseNavbarProps {
-  course: CourseType;
+  course: Course;
   progressCount: number;
 }
 

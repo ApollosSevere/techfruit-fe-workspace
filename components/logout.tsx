@@ -1,5 +1,4 @@
-// components/Dropdown.js
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useLogoutMutation } from "@/redux/authService/authServiceEndpoints";
 import { TOKEN } from "@/redux/auth/slice";
@@ -12,24 +11,42 @@ export const LogoutDropdown = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [logout] = useLogoutMutation();
-  const token = window.localStorage.getItem(TOKEN);
+  const [token, setToken] = useState<string | null>(null);
+
   const accessToken = useAppSelector(selectAccessToken);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = async () => {
+  useEffect(() => {
+    const savedToken = window.localStorage.getItem(TOKEN);
+    setToken(savedToken);
+  }, []);
+
+  // const handleLogout = async () => {
+  //   try {
+  //     const token = window.localStorage.getItem(TOKEN);
+  //     const payload = await logout(token || accessToken).unwrap();
+  //     console.log("fulfilled", payload);
+  //     window.localStorage.removeItem(TOKEN);
+  //     router.push("/sign-in");
+  //   } catch (error) {
+  //     console.error("rejected", error);
+  //   }
+  //   setIsOpen(false);
+  // };
+
+  const handleLogout = useCallback(async () => {
     try {
       const payload = await logout(token || accessToken).unwrap();
-      console.log("fulfilled", payload);
       window.localStorage.removeItem(TOKEN);
       router.push("/sign-in");
     } catch (error) {
       console.error("rejected", error);
     }
     setIsOpen(false);
-  };
+  }, [accessToken, logout, router, token]);
 
   return (
     <div className="relative inline-block text-left">

@@ -11,25 +11,18 @@ import { Preview } from "@/components/preview";
 import { VideoPlayer } from "./_components/video-player";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { CourseProgressButton } from "./_components/course-progress-button";
-import {
-  selectAllCourseData,
-  selectGetChapter,
-} from "@/redux/courses/slice/selector";
+import { selectGetChapter } from "@/redux/courses/slice/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
-import {
-  useFindCourseByPublishedChaptersAndUserIdQuery,
-  useFindCourseMutation,
-} from "@/redux/courses/service/courseServiceEndpoints";
-import { useEffect, useMemo, useState } from "react";
-import { data } from "autoprefixer";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
+
+import { useState } from "react";
+import { Attachment, Course } from "@/redux/courses/slice/types";
 
 const ChapterIdPage = ({
   params,
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  const [data, setData] = useState<CourseType>();
+  const [data, setData] = useState<Course>();
   // const [getCourse, { isLoading, isSuccess, error }] = useFindCourseMutation();
 
   // useEffect(() => {
@@ -143,7 +136,7 @@ const ChapterIdPage = ({
               <>
                 <Separator />
                 <div className="p-4">
-                  {attachments.map((attachment) => (
+                  {attachments.map((attachment: Attachment) => (
                     <a
                       href={attachment.url}
                       target="_blank"

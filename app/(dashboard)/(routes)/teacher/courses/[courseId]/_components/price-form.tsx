@@ -8,7 +8,6 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
 
 import {
   Form,
@@ -22,10 +21,10 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { formatPrice } from "@/lib/format";
 import { useEditCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
+import { Course } from "@/redux/courses/slice/types";
 
 interface PriceFormProps {
-  initialData: CourseType;
+  initialData: Course;
   courseId: string;
 }
 

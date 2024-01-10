@@ -1,5 +1,4 @@
 // import { auth } from "@clerk/nextjs";
-import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
@@ -7,10 +6,11 @@ import { CourseProgress } from "@/components/course-progress";
 
 import { CourseSidebarItem } from "./course-sidebar-item";
 import { string } from "zod";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
+import { Key } from "react";
+import { Course } from "@/redux/courses/slice/types";
 
 interface CourseSidebarProps {
-  course: CourseType;
+  course: Course;
   progressCount: number;
 }
 
@@ -44,16 +44,24 @@ export const CourseSidebar = ({
         )}
       </div>
       <div className="flex flex-col w-full">
-        {course.chapters.map((chapter) => (
-          <CourseSidebarItem
-            key={chapter.id}
-            id={chapter.id}
-            label={chapter.title}
-            isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
-            courseId={course.id}
-            isLocked={!chapter.isFree && !purchase}
-          />
-        ))}
+        {course.chapters.map(
+          // TODO: change this type
+          (chapter: {
+            id: string;
+            title: string;
+            userProgress: { isCompleted: any }[];
+            isFree: any;
+          }) => (
+            <CourseSidebarItem
+              key={chapter.id}
+              id={chapter.id}
+              label={chapter.title}
+              isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+              courseId={course.id}
+              isLocked={!chapter.isFree && !purchase}
+            />
+          )
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
-import { Category, Course } from "@prisma/client";
-
 import { CourseCard } from "@/components/course-card";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
+import { Course, Category } from "@/redux/courses/slice/types";
 
 export type CourseWithProgressWithCategory = Course & {
   category: Category | null;
@@ -10,7 +8,7 @@ export type CourseWithProgressWithCategory = Course & {
 };
 
 interface CoursesListProps {
-  items: CourseType[];
+  items: Course[];
 }
 
 export const CoursesList = ({ items }: CoursesListProps) => {

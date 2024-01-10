@@ -8,11 +8,10 @@ import { db } from "@/lib/db";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { useGetAllCoursesQuery } from "@/redux/courses/service/courseServiceEndpoints";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
-import { Course } from "@prisma/client";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { selectUserId } from "@/redux/auth/selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { Course } from "@/redux/courses/slice/types";
 
 const CoursesPage = () => {
   // TODO: This query has to be user specific!
@@ -22,7 +21,7 @@ const CoursesPage = () => {
     { refetchOnMountOrArgChange: true } // TODO: figure out what this means
   );
 
-  const courses: CourseType[] = data;
+  const courses: Course[] = data;
 
   return (
     <div className="p-6">

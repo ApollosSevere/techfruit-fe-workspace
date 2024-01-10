@@ -1,7 +1,11 @@
 import { selectUserId } from "@/redux/auth/selector";
 import { RootState } from "@/redux/store";
 import { useAppSelector } from "@/redux/utils/hooks";
-import { AnalyticsCalc, ChapterType, CourseType } from "./courseSlice";
+import { createSelector } from "@reduxjs/toolkit";
+import { Chapter, Course } from "./types";
+
+const getUserId = (state: RootState) => state.auth.uuid;
+const getDashboardCourses = (state: RootState) => state.course.dashboardCourses;
 
 export const selectAllCourseData = (state: RootState) => state.course.currentCourse;
 export const selectAllCategories = (state: RootState) => state.course.categories;
@@ -33,7 +37,7 @@ export const selectGetChapter = (state: RootState, chapterId: string ) => {
 
   // console.log(chapter?.userProgress)
 
-  function findIndexOfObject(chapters: ChapterType[], obj:ChapterType) {
+  function findIndexOfObject(chapters: Chapter[], obj:Chapter) {
       for (let i = 0; i < chapters.length; i++) {
           if (chapters[i] === obj) {
               return i;
@@ -61,8 +65,8 @@ export const selectGetChapter = (state: RootState, chapterId: string ) => {
 
 };
 
-export const addProgress = (data: CourseType[], userId: string | undefined) : CourseType[] => {
-  const dashboardCourses: CourseType[] = [];
+export const addProgress = (data: Course[], userId: string | undefined) : Course[] => {
+  const dashboardCourses: Course[] = [];
 
 
   for (let course of (data || [])) {
@@ -97,41 +101,48 @@ export const addProgress = (data: CourseType[], userId: string | undefined) : Co
 }
 
 
-export const selectDashboardData = (state: RootState) => {
-  let completedCourses: CourseType[] = [];
-  let coursesInProgress: CourseType[] = [];
+// export const selectDashboardData = (state: RootState) => {
+//   let completedCourses: Course[] = [];
+//   let coursesInProgress: Course[] = [];
 
-  const userId = state.auth.uuid;
-  const dashboardCourses: CourseType[] = addProgress(state.course.dashboardCourses, userId?.toString());
+//   const userId = state.auth.uuid;
+//   const dashboardCourses: Course[] = addProgress(state.course.dashboardCourses, userId?.toString());
 
-  // for (let course of state.course.dashboardCourses) {
-  //   const publishedChapterIds = course.chapters.filter(
-  //     (chapter) => chapter.isPublished
-  //   );
+//   completedCourses = dashboardCourses.filter(
+//     (course: Course) => course?.progress === 100
+//   );
+//   coursesInProgress = dashboardCourses.filter(
+//     (course: Course) => (course?.progress ?? 0) < 100
+//   );
 
-  //   const validCompletedChapters = course.chapters.filter(
-  //     (chapter) =>
-  //       chapter?.userProgress?.find(
-  //         (progress) => progress.userId === userId?.toString()
-  //       ) && chapter.isPublished
-  //   ).length;
+//   return {
+//     completedCourses,
+//     coursesInProgress,
+//   };
+// };
 
-  //   const progressPercentage =
-  //     (validCompletedChapters / publishedChapterIds.length) * 100;
 
-  //   dashboardCourses.push({ ...course, progress: progressPercentage });
-  // }
 
-  completedCourses = dashboardCourses.filter(
-    (course: CourseType) => course?.progress === 100
-  );
-  coursesInProgress = dashboardCourses.filter(
-    (course: CourseType) => (course?.progress ?? 0) < 100
-  );
+export const selectDashboardData = createSelector(
+  [getUserId, getDashboardCourses],
+  (userId, dashboardCourses) => {
+    let completedCourses: Course[] = [];
+    let coursesInProgress: Course[] = [];
 
-  return {
-    completedCourses,
-    coursesInProgress,
-  };
-};
+    const userIdString = userId?.toString();
+    const coursesWithProgress = addProgress(dashboardCourses, userIdString);
+
+    completedCourses = coursesWithProgress.filter(
+      (course: Course) => course?.progress === 100
+    );
+    coursesInProgress = coursesWithProgress.filter(
+      (course: Course) => (course?.progress ?? 0) < 100
+    );
+
+    return {
+      completedCourses,
+      coursesInProgress,
+    };
+  }
+);
 

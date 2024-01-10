@@ -4,14 +4,12 @@
 import { redirect } from "next/navigation";
 import { CheckCircle, Clock } from "lucide-react";
 
-import { getDashboardCourses } from "@/actions/get-dashboard-courses";
 import { CoursesList } from "@/components/courses-list";
 
 import { InfoCard } from "./_components/info-card";
 import { selectAccessToken, selectUserId } from "@/redux/auth/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { useGetDashboardCoursesQuery } from "@/redux/courses/service/courseServiceEndpoints";
-import { CourseType } from "@/redux/courses/slice/courseSlice";
 import { selectDashboardData } from "@/redux/courses/slice/selector";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
 
