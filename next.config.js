@@ -4,11 +4,18 @@ const nextConfig = {
     domains: ["utfs.io"],
   },
 
-  webpack(config) {
+  webpack: (config, { dev, isServer }) => {
+    config.mode = "production";
+
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false, // the solution
     };
+
+    if (!dev && isServer) {
+      const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+      config.plugins = [new HardSourceWebpackPlugin(), ...config.plugins];
+    }
 
     return config;
   },

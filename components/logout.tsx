@@ -56,11 +56,14 @@ export const LogoutDropdown = () => {
         className="flex items-center text-white focus:outline-none"
         onClick={handleToggle}
       >
-        <img
-          src="https://as2.ftcdn.net/v2/jpg/00/64/67/27/1000_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg" // Replace with your unknown user image source
-          alt="Unknown User"
+        <Image
+          src={
+            "https://as2.ftcdn.net/v2/jpg/00/64/67/27/1000_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+          }
+          alt={"Unknown User"}
           className="w-8 h-8 rounded-full mr-2"
         />
+
         <svg
           className="w-6 h-6 fill-current"
           xmlns="http://www.w3.org/2000/svg"
