@@ -12,11 +12,6 @@ const nextConfig = {
       fs: false, // the solution
     };
 
-    if (!dev && isServer) {
-      const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
-      config.plugins = [new HardSourceWebpackPlugin(), ...config.plugins];
-    }
-
     return config;
   },
 };
