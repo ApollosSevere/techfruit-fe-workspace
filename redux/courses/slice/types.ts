@@ -1,3 +1,5 @@
+"use client"
+
 export interface Course {
   id: string;
   userId: string;

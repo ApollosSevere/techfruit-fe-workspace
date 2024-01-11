@@ -23,47 +23,87 @@ export const selectAnalytics = (state: RootState) => {
 };
 
 
-// TODO: Change this name!
-export const selectGetChapter = (state: RootState, chapterId: string ) => {
+// // TODO: Change this name!
+// export const selectGetChapter = (state: RootState, chapterId: string ) => {
 
-  const course = state.course.currentCourse;
-  const chapter = course.chapters.find(chapter => chapter.id === chapterId);
-  const attachments = course.attachments;
-  const userProgress = chapter?.userProgress?.find(progress => progress.userId === state.auth.uuid?.toString());
-  const muxData = chapter?.muxData;
-  const chapters = course.chapters;
-  const purchase = course.purchases?.find(purchase => purchase.userId === state.auth.uuid?.toString()); // TODO: change this
-  let nextChapter = chapter;
+//   const course = state.course.currentCourse;
+//   const chapter = course.chapters.find(chapter => chapter.id === chapterId);
+//   const attachments = course.attachments;
+//   const userProgress = chapter?.userProgress?.find(progress => progress.userId === state.auth.uuid?.toString());
+//   const muxData = chapter?.muxData;
+//   const chapters = course.chapters;
+//   const purchase = course.purchases?.find(purchase => purchase.userId === state.auth.uuid?.toString()); // TODO: change this
+//   let nextChapter = chapter;
 
-  // console.log(chapter?.userProgress)
+//   // console.log(chapter?.userProgress)
 
-  function findIndexOfObject(chapters: Chapter[], obj:Chapter) {
+//   function findIndexOfObject(chapters: Chapter[], obj:Chapter) {
+//       for (let i = 0; i < chapters.length; i++) {
+//           if (chapters[i] === obj) {
+//               return i;
+//           }
+//       }
+//       return -1; // Return -1 if the object is not found in the array
+//   }
+
+//   if (chapter) {
+//     let nextIndex = findIndexOfObject(chapters, chapter) + 1;
+//     nextChapter = course.chapters[nextIndex];
+//   }
+
+
+//   return {
+//       chapter,
+//       chapters,
+//       course,
+//       muxData,
+//       attachments,
+//       nextChapter,
+//       userProgress,
+//       purchase,
+//     };
+
+// };
+
+export const selectGetChapter = createSelector(
+  (state: RootState) => state.course.currentCourse,
+  (_: RootState, chapterId: string) => chapterId,
+  (state: RootState) => state.auth.uuid,
+  (currentCourse, chapterId, userId) => {
+    const chapter = currentCourse?.chapters.find(chap => chap.id === chapterId);
+    const attachments = currentCourse?.attachments;
+    const userProgress = chapter?.userProgress?.find(progress => progress.userId === userId?.toString());
+    const muxData = chapter?.muxData;
+    const chapters = currentCourse?.chapters;
+    const purchase = currentCourse?.purchases?.find(p => p.userId === userId?.toString());
+    let nextChapter = chapter;
+
+    function findIndexOfObject(chapters: Chapter[], obj: Chapter) {
       for (let i = 0; i < chapters.length; i++) {
-          if (chapters[i] === obj) {
-              return i;
-          }
+        if (chapters[i] === obj) {
+          return i;
+        }
       }
-      return -1; // Return -1 if the object is not found in the array
-  }
+      return -1;
+    }
 
-  if (chapter) {
-    let nextIndex = findIndexOfObject(chapters, chapter) + 1;
-    nextChapter = course.chapters[nextIndex];
-  }
+    if (chapter) {
+      const nextIndex = findIndexOfObject(chapters || [], chapter) + 1;
+      nextChapter = chapters && chapters[nextIndex];
+    }
 
-
-  return {
+    return {
       chapter,
       chapters,
-      course,
+      course: currentCourse,
       muxData,
       attachments,
       nextChapter,
       userProgress,
       purchase,
     };
-
-};
+  }
+);
 
 export const addProgress = (data: Course[], userId: string | undefined) : Course[] => {
   const dashboardCourses: Course[] = [];
