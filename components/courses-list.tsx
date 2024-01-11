@@ -1,3 +1,4 @@
+"use client";
 import { CourseCard } from "@/components/course-card";
 import { Course, Category } from "@/redux/courses/slice/types";
 
