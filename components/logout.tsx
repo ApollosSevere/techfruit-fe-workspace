@@ -57,10 +57,9 @@ export const LogoutDropdown = () => {
         onClick={handleToggle}
       >
         <Image
-          src={
-            "https://as2.ftcdn.net/v2/jpg/00/64/67/27/1000_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
-          }
-          alt={"Unknown User"}
+          src="https://as2.ftcdn.net/v2/jpg/00/64/67/27/1000_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+          alt="Unknown User"
+          width="32"
           className="w-8 h-8 rounded-full mr-2"
         />
 
