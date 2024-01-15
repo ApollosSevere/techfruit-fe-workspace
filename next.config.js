@@ -5,7 +5,7 @@ const nextConfig = {
   },
 
   webpack: (config, { dev, isServer }) => {
-    config.mode = "production";
+    // config.mode = "production";
 
     config.resolve.fallback = {
       ...config.resolve.fallback,
