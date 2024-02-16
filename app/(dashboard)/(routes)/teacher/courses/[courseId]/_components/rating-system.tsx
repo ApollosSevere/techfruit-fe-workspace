@@ -1,20 +1,24 @@
 import { FaRegStar, FaStar } from "react-icons/fa";
 import React, { useState, useLayoutEffect, useCallback, useMemo } from "react";
 
+// Defining props interface for RatingSystem component
 interface RatingSystemProps {
-  setRating: any;
-  rating: number;
-  numOfStars: number;
+  setRating: any; // Function to set the rating
+  rating: number; // Current rating value
+  numOfStars: number; // Number of stars to display (default is 5)
 }
 
+// RatingSystem component definition
 export const RatingSystem = ({
   rating,
   setRating,
   numOfStars = 5,
 }: RatingSystemProps) => {
+  // State to manage the array of stars and hovered state
   const [stars, setStars] = useState<number[]>([]);
   const [hovered, setHovered] = useState(0);
 
+  // useLayoutEffect hook to update stars array when numOfStars prop changes
   useLayoutEffect(() => {
     const starsArray = [];
     let starCount = numOfStars || 5;
@@ -26,27 +30,30 @@ export const RatingSystem = ({
     setStars(starsArray);
   }, [numOfStars]);
 
+  // Function to update the rating when a star is clicked
   const updateRating = (star: number) => {
     rating === star ? setRating(0) : setRating(star);
   };
 
+  // Memoized function to render each individual star
   const renderedStar = useCallback(
     (star: number) => {
       return rating < star ? (
         hovered < star ? (
-          <FaRegStar />
+          <FaRegStar /> // Render empty star when not rated and not hovered
         ) : (
-          <FaStar />
+          <FaStar /> // Render filled star when not rated but hovered
         )
       ) : hovered < star && hovered != 0 ? (
-        <FaRegStar />
+        <FaRegStar /> // Render empty star when rated but not hovered
       ) : (
-        <FaStar />
+        <FaStar /> // Render filled star when rated and hovered
       );
     },
     [rating, hovered]
   );
 
+  // Memoized stars view to avoid unnecessary re-renders
   const starsView = useMemo(
     () =>
       stars.map((star) => (
@@ -57,11 +64,12 @@ export const RatingSystem = ({
           onMouseEnter={() => setHovered(star)}
           onMouseLeave={() => setHovered(0)}
         >
-          {renderedStar(star)}
+          {renderedStar(star)} {/* Render each star */}
         </span>
       )),
     [stars, updateRating]
   );
 
+  // Return the stars view wrapped in a div with specific styling
   return <div className="mb-4 flex text-emerald-700">{starsView}</div>;
 };
