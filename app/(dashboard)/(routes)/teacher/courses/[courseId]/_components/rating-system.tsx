@@ -1,6 +1,12 @@
 import { FaRegStar, FaStar } from "react-icons/fa";
 import React, { useState, useLayoutEffect, useCallback, useMemo } from "react";
 
+/* 
+   The RatingSystem component is a reusable React component that allows users to rate 
+   items by clicking on stars, with the ability to customize the number of stars displayed. 
+   Thanks for the opportunity :) 
+*/
+
 // Defining props interface for RatingSystem component
 interface RatingSystemProps {
   setRating: any; // Function to set the rating
