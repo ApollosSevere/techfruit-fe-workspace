@@ -27,21 +27,18 @@ export const CourseEnrollButton = ({
   const [addPurchase, { isLoading, isSuccess, error }] =
     useAddPurchaseMutation();
 
-  // console.log("userrrrr: ", user);
-
   const onClick = async () => {
     try {
       setIsLoading(true);
 
       await addPurchase({ courseId, data: { userId: user.uuid } });
 
-      // const response = await axios.post(`/api/courses/${courseId}/checkout`, {
-      //   test: "Workkkkeddd!",
-      //   user,
-      //   course,
-      // });
+      const response = await axios.post(`/api/courses/${courseId}/checkout`, {
+        user,
+        course,
+      });
 
-      // window.location.assign(response.data.url);
+      window.location.assign(response.data.url);
     } catch {
       toast.error("Something went wrong");
     } finally {

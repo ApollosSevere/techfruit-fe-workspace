@@ -2,7 +2,7 @@ import { selectUserId } from "@/redux/auth/selector";
 import { RootState } from "@/redux/store";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { createSelector } from "@reduxjs/toolkit";
-import { Chapter, Course } from "./types";
+import { Chapter, Course, Purchase, UserProgress } from "./types";
 
 const getUserId = (state: RootState) => state.auth.uuid;
 const getDashboardCourses = (state: RootState) => state.course.dashboardCourses;
@@ -70,12 +70,12 @@ export const selectGetChapter = createSelector(
   (_: RootState, chapterId: string) => chapterId,
   (state: RootState) => state.auth.uuid,
   (currentCourse, chapterId, userId) => {
-    const chapter = currentCourse?.chapters.find(chap => chap.id === chapterId);
+    const chapter = currentCourse?.chapters.find((chap: Chapter) => chap.id === chapterId);
     const attachments = currentCourse?.attachments;
-    const userProgress = chapter?.userProgress?.find(progress => progress.userId === userId?.toString());
+    const userProgress = chapter?.userProgress?.find((progress: UserProgress) => progress.userId === userId?.toString());
     const muxData = chapter?.muxData;
     const chapters = currentCourse?.chapters;
-    const purchase = currentCourse?.purchases?.find(p => p.userId === userId?.toString());
+    const purchase = currentCourse?.purchases?.find((p: Purchase) => p.userId === userId?.toString());
     let nextChapter = chapter;
 
     function findIndexOfObject(chapters: Chapter[], obj: Chapter) {
@@ -105,24 +105,22 @@ export const selectGetChapter = createSelector(
   }
 );
 
-export const addProgress = (data: Course[], userId: string | undefined) : Course[] => {
+export const addProgress = (data: Course[], userId: string | null | undefined) : Course[] => {
   const dashboardCourses: Course[] = [];
-
 
   for (let course of (data || [])) {
     let isPurchased = false;
-    const publishedChapterIds = course.chapters.filter(
+
+    const publishedChapterIds = course?.chapters.filter(
       (chapter) => chapter.isPublished
     );
 
-    const validCompletedChapters = course.chapters.filter(
+    const validCompletedChapters = course?.chapters.filter(
       (chapter) =>
         chapter?.userProgress?.find(
           (progress) => { 
-            if (course.userId === "1") {
-              console.log(progress.userId === userId, progress.userId)
-            }
-            const doesUserHaveProgress = progress.userId === userId
+            const doesUserHaveProgress = progress.userId.toString() === userId?.toString()
+
             if (doesUserHaveProgress && !isPurchased) isPurchased = true;
 
             return doesUserHaveProgress && progress.isCompleted
@@ -130,9 +128,8 @@ export const addProgress = (data: Course[], userId: string | undefined) : Course
         ) && chapter.isPublished 
     ).length;
 
-
     const progressPercentage =
-      (validCompletedChapters / publishedChapterIds.length) * 100;
+      (validCompletedChapters / publishedChapterIds?.length) * 100;
 
     dashboardCourses.push({ ...course, progress: isPurchased ? progressPercentage : null });
   }

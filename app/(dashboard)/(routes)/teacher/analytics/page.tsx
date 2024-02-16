@@ -1,6 +1,4 @@
-// import { auth } from "@clerk/nextjs";
 "use client";
-import { redirect } from "next/navigation";
 
 import { DataCard } from "./_components/data-card";
 import { Chart } from "./_components/chart";
@@ -13,14 +11,9 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 const AnalyticsPage = () => {
   const userId = useAppSelector(selectUserId);
 
-  const { isLoading } = useGetAnalyticsCalculationQuery(
-    userId,
-    { refetchOnMountOrArgChange: true } // TODO: figure out what this means
-  );
+  const { isLoading } = useGetAnalyticsCalculationQuery(userId);
 
   const { data, totalRevenue, totalSales } = useAppSelector(selectAnalytics);
-
-  console.log(data, totalRevenue, totalSales);
 
   return (
     <>

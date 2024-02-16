@@ -1,6 +1,5 @@
 "use client";
 
-// import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { File } from "lucide-react";
 
@@ -14,58 +13,13 @@ import { CourseProgressButton } from "./_components/course-progress-button";
 import { selectGetChapter } from "@/redux/courses/slice/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
 
-import { useState } from "react";
-import { Attachment, Course } from "@/redux/courses/slice/types";
+import { Attachment } from "@/redux/courses/slice/types";
 
 const ChapterIdPage = ({
   params,
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  const [data, setData] = useState<Course>();
-  // const [getCourse, { isLoading, isSuccess, error }] = useFindCourseMutation();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     //  const response = await MyAPI.getData(someId);
-  //     const result = await getCourse({
-  //       courseId: params.courseId,
-  //       userId: "1",
-  //     }).unwrap();
-  //     setData(result);
-  //   }
-  //   fetchData();
-  // }, [getCourse, params.courseId]);
-
-  // const { userId } = auth();
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  // const {
-  //   chapter,
-  //   course,
-  //   muxData,
-  //   price,
-  //   attachments,
-  //   nextChapter,
-  //   userProgress,
-  //   purchase,
-  // } = useMemo(
-  //   () =>
-  //     getChapter({
-  //       data,
-  //       chapterId: params.chapterId,
-  //     }),
-  //   [data, params.chapterId]
-  // );
-
-  // if (!chapter || !course) {
-  //   return redirect("/");
-  // }
-
   const {
     chapter,
     course,
@@ -132,7 +86,7 @@ const ChapterIdPage = ({
             <div>
               <Preview value={chapter.description!} />
             </div>
-            {!!attachments.length && (
+            {!!attachments?.length && (
               <>
                 <Separator />
                 <div className="p-4">

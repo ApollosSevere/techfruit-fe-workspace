@@ -22,10 +22,10 @@ export const coursesApi = apiSlice.injectEndpoints({
       }),
     }),
     getPublishedCourses: builder.query({
-      query: ({title, categoryId}) => ({
+      query: (data) => ({
         url: "course/getPublishedCourses",
         method: "GET",
-        params: { title, categoryId }
+        params: { title: data.title, categoryId: data.categoryId }
         // credentials: "include" as const,
       }),
     }),
@@ -150,7 +150,7 @@ export const coursesApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    getDashboardCourses: builder.mutation({
+    getDashboardCourses: builder.query({
       query: (userId) => ({
         url: `course/${userId}/getDashboard`,
         method: "GET",
@@ -182,6 +182,17 @@ export const coursesApi = apiSlice.injectEndpoints({
         params: { courseId }
       }),
     }),
+
+    addReviewToCourse: builder.mutation({
+      query: ({courseId, review}) => ({
+        url: `course/${courseId}/reviews`,
+        method: "POST",
+        body: review,
+      }),
+
+    
+    }),
+
     
 
     // getCourseContent: builder.query({
@@ -259,11 +270,12 @@ export const {
   useFindCourseByPublishedChaptersQuery,
   useFindCourseByPublishedChaptersAndUserIdQuery,
   useAddPurchaseMutation,
-  useGetDashboardCoursesMutation,
+  useGetDashboardCoursesQuery,
   useGetPublishedCoursesQuery,
   useGetAnalyticsCalculationQuery,
   useGetAllCategoriesQuery,
   useUpdateChapterPositionsMutation,
+  useAddReviewToCourseMutation,
 //   useGetCourseContentQuery,
 //   useAddNewQuestionMutation,
 //   useAddAnswerInQuestionMutation,

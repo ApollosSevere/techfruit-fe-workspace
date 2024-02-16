@@ -67,6 +67,7 @@ export const initialCourseState: CourseState = {
     chapters: [],
     attachments: [],
     purchases: [],
+    reviews: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -164,6 +165,13 @@ const courseSlice = createSlice({
       coursesApi.endpoints.getAllCategories.matchFulfilled,
       (state, action: PayloadAction<Category[]>) => {
         state.categories = action.payload;
+      }
+    );
+
+    builder.addMatcher(
+      coursesApi.endpoints.addReviewToCourse.matchFulfilled,
+      (state, action: PayloadAction<Course>) => {
+        state.currentCourse = action.payload;
       }
     );
   },

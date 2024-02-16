@@ -1,94 +1,29 @@
 "use client";
 
-import { CourseSidebar } from "./_components/course-sidebar";
-import { CourseNavbar } from "./_components/course-navbar";
-import {
-  useFindCourseByPublishedChaptersQuery,
-  useGetCourseWithChaptersAndUserProgressQuery,
-  useFindCourseByPublishedChaptersAndUserIdQuery,
-} from "@/redux/courses/service/courseServiceEndpoints";
-import { selectAllCourseData } from "@/redux/courses/slice/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { selectUserId } from "@/redux/auth/selector";
+import { CourseSidebar } from "./_components/course-sidebar";
+import { CourseNavbar } from "./_components/course-navbar";
+import { addProgress } from "@/redux/courses/slice/selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { useFindCourseByPublishedChaptersAndUserIdQuery } from "@/redux/courses/service/courseServiceEndpoints";
 
 const CourseLayout = ({
   children,
-  // isLoading,
   params,
 }: {
   children: React.ReactNode;
-  // isLoading: boolean;
   params: { courseId: string };
 }) => {
-  // const { userId } = auth();
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  // const course = await db.course.findUnique({
-  //   where: {
-  //     id: params.courseId,
-  //   },
-  //   include: {
-  //     chapters: {
-  //       where: {
-  //         isPublished: true,
-  //       },
-  //       include: {
-  //         // Just give me progress from signed in user!
-  //         userProgress: {
-  //           where: {
-  //             userId,
-  //           },
-  //         },
-  //       },
-  //       orderBy: {
-  //         position: "asc",
-  //       },
-  //     },
-  //   },
-  // });
-
-  // const { isLoading, data, refetch } =
-  //   useGetCourseWithChaptersAndUserProgressQuery(
-  //     { courseId: params.courseId, userId: "1" },
-  //     { refetchOnMountOrArgChange: true } // TODO: figure out what this means
-  //   );
-
-  // const course = data;
-
-  // const { isLoading, data, refetch } =
-  //   useFindCourseByPublishedChaptersAndUserIdQuery({
-  //     courseId: params.courseId,
-  //     userId: "1",
-  //   });
-
-  // const course = data;
-
-  // if (!isLoading && !course) {
-  //   return redirect("/");
-  // }
-
-  // const course = useAppSelector(selectAllCourseData);
   const userId = useAppSelector(selectUserId);
 
-  const { isLoading, data, refetch } =
-    useFindCourseByPublishedChaptersAndUserIdQuery(
-      {
-        courseId: params.courseId,
-        userId,
-      },
-      { refetchOnMountOrArgChange: true }
-    );
+  const { isLoading, data } = useFindCourseByPublishedChaptersAndUserIdQuery({
+    courseId: params.courseId,
+    userId,
+  });
 
-  const course = data;
-
-  // const progressCount = getProgress("1", course.id);
-  const progressCount = 50;
-
-  // console.log(course, "Hyyyyy");
+  const course = addProgress([data], userId)[0];
+  const progressCount = course?.progress || 0;
 
   return (
     <>

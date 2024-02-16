@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import MuxPlayer from "@mux/mux-player-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -40,10 +39,6 @@ export const VideoPlayer = ({
   const onEnd = async () => {
     try {
       if (completeOnEnd) {
-        // await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
-        //   isCompleted: true,
-        // });
-
         editCourse({ courseId, chapterId, userId: 1, isCompleted: true });
 
         if (!nextChapterId) {

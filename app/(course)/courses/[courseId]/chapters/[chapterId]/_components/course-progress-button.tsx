@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -38,14 +37,6 @@ export const CourseProgressButton = ({
     try {
       setIsLoading(true);
 
-      // await axios.put(
-      //   `/api/courses/${courseId}/chapters/${chapterId}/progress`,
-      //   {
-      //     isCompleted: !isCompleted,
-      //   }
-      // );
-      // console.log(isCompleted);
-
       updateUserProgress({
         courseId,
         chapterId,
@@ -80,7 +71,7 @@ export const CourseProgressButton = ({
       variant={isCompleted ? "outline" : "success"}
       className="w-full md:w-auto"
     >
-      {isCompleted ? "Not completed" : "Mark as complete"}
+      {isCompleted ? "Mark as incomplete" : "Mark as complete"}
       <Icon className="h-4 w-4 ml-2" />
     </Button>
   );

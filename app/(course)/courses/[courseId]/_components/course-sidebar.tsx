@@ -1,13 +1,6 @@
-// import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-
-import { db } from "@/lib/db";
-import { CourseProgress } from "@/components/course-progress";
-
-import { CourseSidebarItem } from "./course-sidebar-item";
-import { string } from "zod";
-import { Key } from "react";
 import { Course } from "@/redux/courses/slice/types";
+import { CourseSidebarItem } from "./course-sidebar-item";
+import { CourseProgress } from "@/components/course-progress";
 
 interface CourseSidebarProps {
   course: Course;
@@ -18,12 +11,6 @@ export const CourseSidebar = ({
   course,
   progressCount,
 }: CourseSidebarProps) => {
-  // const { userId } = auth();
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
   const purchase = {
     id: "string",
     userId: "string",
@@ -34,7 +21,6 @@ export const CourseSidebar = ({
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      {/* sidebar */}
       <div className="p-8 flex flex-col border-b">
         <h1 className="font-semibold">{course.title}</h1>
         {purchase && (
@@ -45,7 +31,6 @@ export const CourseSidebar = ({
       </div>
       <div className="flex flex-col w-full">
         {course.chapters.map(
-          // TODO: change this type
           (chapter: {
             id: string;
             title: string;
