@@ -17,7 +17,7 @@ Welcome to the TechnologyFruit Frontend Workspace repository! This application s
 
 Java SpringBoot Microservices deployed through AWS powers this application
 
-| command         | description                              |
+| GitHub Link         | Description                              |
 | :-------------- | :--------------------------------------- |
 | [api-gateway](https://github.com/ApollosSevere/TechnologyFruit-Micorservices-Gateway-Service) | Directs all traffic to appropriate service |
 | [auth-service](https://github.com/ApollosSevere/TechnologyFruit-Micorservices-Auth-Service) | Spring Boot 3.0 Security with JWT Implementation |
