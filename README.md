@@ -15,7 +15,7 @@ Thanks for the opportunity :)
 </video> -->
 
 <!-- Replace "YOUR_EMBED_CODE_HERE" with the actual embed code provided by YouTube or Vimeo -->
-<iframe width="1000"  src="https://www.youtube.com/embed/VfWXQ6UABhk" frameborder="0" allowfullscreen></iframe>
+[<img src="https://img.youtube.com/vi/VfWXQ6UABhk/0.jpg" width="1000">](https://www.youtube.com/watch?v=VfWXQ6UABhk)
 
 <br>
 
