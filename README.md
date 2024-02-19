@@ -7,15 +7,14 @@ The RatingSystem component is a reusable React component that allows users to ra
 items by clicking on stars, with the ability to customize the number of stars displayed. 
 Thanks for the opportunity :) 
 
-<!-- <img src="rating_system.jpeg" alt="Photo of Rating System" width="550"> -->
+<img src="rating_system.jpeg" alt="Photo of Rating System" width="550">
 
 <!-- <video width="1000" controls autoplay loop>
   <source src="techfruit-rating-example.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video> -->
 
-<!-- Replace "YOUR_EMBED_CODE_HERE" with the actual embed code provided by YouTube or Vimeo -->
-[<img src="https://img.youtube.com/vi/VfWXQ6UABhk/0.jpg" width="1000">](https://www.youtube.com/watch?v=VfWXQ6UABhk)
+
 
 <br>
 
