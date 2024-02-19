@@ -24,10 +24,26 @@ Java SpringBoot Microservices deployed through AWS powers this application
 | [auth-service](https://github.com/ApollosSevere/TechnologyFruit-Micorservices-Auth-Service) | Spring Boot 3.0 Security with JWT Implementation |
 | [course-service](https://github.com/ApollosSevere/TechnologyFruit-Microservices-course-service) | Manages courses within the TechnologyFruit ecosystem |
 
+# Microservice CI/CD Pipeline
 
-# Microservices CI/CD Pipeline
+This pipeline automates the deployment process of a microservice on an AWS EKS cluster. It includes stages for Git checkout, Maven build, SonarQube static code analysis, AWS ECR image build and push, EKS cluster connection, and deployment on the EKS cluster.
 
-This repository contains the configuration for a Continuous Integration/Continuous Deployment (CI/CD) pipeline for deploying microservices to an AWS EKS cluster.
+## Prerequisites
+
+- Jenkins with necessary plugins installed.
+- AWS IAM user with appropriate permissions for ECR, EKS, and necessary resources.
+- SonarQube server with projects set up for static code analysis.
+- Maven configured on the Jenkins server.
+- Terraform installed on the Jenkins server if using Terraform for EKS cluster creation (currently commented out).
+
+## Pipeline Configuration
+
+The pipeline is configured using a Jenkinsfile. It includes parameters for:
+- `action`: Choose between `create` or `delete` to create or destroy resources.
+- `aws_account_id`: AWS Account ID where resources will be deployed.
+- `Region`: AWS region where resources will be deployed.
+- `ECR_REPO_NAME`: Name of the ECR repository.
+- `cluster`: Name of the target EKS cluster.
 
 ## Pipeline Overview
 
@@ -61,4 +77,3 @@ The pipeline is defined using Jenkins declarative pipeline syntax. It consists o
 ## Pipeline Configuration
 
 The pipeline is defined using Jenkins pipeline syntax. You can customize it by modifying the `Jenkinsfile-AWS-Pipeline` in this repository. Adjust the stages, parameters, and steps as needed to fit your project requirements.
-
