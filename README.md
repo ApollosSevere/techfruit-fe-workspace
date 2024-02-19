@@ -9,10 +9,13 @@ Thanks for the opportunity :)
 
 <!-- <img src="rating_system.jpeg" alt="Photo of Rating System" width="550"> -->
 
-<video width="1000" controls autoplay loop>
+<!-- <video width="1000" controls autoplay loop>
   <source src="techfruit-rating-example.mp4" type="video/mp4">
   Your browser does not support the video tag.
-</video>
+</video> -->
+
+<!-- Replace "YOUR_EMBED_CODE_HERE" with the actual embed code provided by YouTube or Vimeo -->
+<iframe width="1000"  src="https://www.youtube.com/embed/VfWXQ6UABhk" frameborder="0" allowfullscreen></iframe>
 
 <br>
 
