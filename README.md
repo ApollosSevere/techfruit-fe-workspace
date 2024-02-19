@@ -8,7 +8,11 @@ items by clicking on stars, with the ability to customize the number of stars di
 Thanks for the opportunity :) 
 
 <!-- <img src="rating_system.jpeg" alt="Photo of Rating System" width="550"> -->
-<img src="techfruit-rating-example.gif" alt="Video Title" width="900">
+
+<video width="1000" controls autoplay loop>
+  <source src="techfruit-rating-example.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 <br>
 
