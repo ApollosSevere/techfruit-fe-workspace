@@ -11,8 +11,6 @@ Thanks for the opportunity :)
 
 <img src="techfruit-rating-example.gif" alt="Video Title" width="1100">
 
-
-
 <br>
 
 # TechnologyFruit Frontend Workspace
