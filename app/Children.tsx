@@ -11,16 +11,18 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 export default function Children({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const accessToken = useAppSelector(selectAccessToken);
+  const reduxToken = useAppSelector(selectAccessToken);
   const [showLogin, setShowLogin] = useState<boolean>(true);
 
-  const [validateToken, { isSuccess }] = useValidateTokenMutation();
+  const [validateToken] = useValidateTokenMutation();
 
   useLayoutEffect(() => {
-    const token = window.localStorage.getItem(TOKEN);
+    const localStorageToken = window.localStorage.getItem(TOKEN);
 
     setShowLogin(
-      !token && !accessToken && !["/sign-in", "/sign-up"].includes(pathname)
+      !localStorageToken &&
+        !reduxToken &&
+        !["/sign-in", "/sign-up"].includes(pathname)
     );
 
     const redirectToSignIn = () => {
@@ -29,20 +31,20 @@ export default function Children({ children }: { children: React.ReactNode }) {
     };
 
     const checkToken = async () => {
-      try {
-        if (token && !accessToken) {
-          await validateToken(token);
-        } else if (showLogin) {
+      if (localStorageToken && !reduxToken) {
+        try {
+          await validateToken(localStorageToken).unwrap();
+        } catch (error) {
           redirectToSignIn();
+          console.error("rejected", error);
         }
-      } catch (error) {
+      } else if (showLogin) {
         redirectToSignIn();
-        console.error("rejected", error);
       }
     };
 
     checkToken();
-  }, [accessToken, pathname, router, validateToken]);
+  }, [reduxToken, pathname, router, validateToken]);
 
   return <>{showLogin ? <LoadingSpinner /> : children}</>;
 }
