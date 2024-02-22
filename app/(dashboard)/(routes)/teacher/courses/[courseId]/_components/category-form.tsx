@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
@@ -18,7 +17,6 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
 import { useEditCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
 import { Course } from "@/redux/courses/slice/types";
@@ -56,11 +54,10 @@ export const CategoryForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // await axios.patch(`/api/courses/${courseId}`, values);
       await editCourse({ courseId, values });
+
       toast.success("Course updated");
       toggleEdit();
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     }

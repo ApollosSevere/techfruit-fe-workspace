@@ -1,5 +1,5 @@
 "use client";
-// import { auth } from "@clerk/nextjs";
+
 import { redirect } from "next/navigation";
 import {
   CircleDollarSign,
@@ -8,7 +8,6 @@ import {
   ListChecks,
 } from "lucide-react";
 
-import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
@@ -29,80 +28,10 @@ import {
 } from "@/redux/courses/slice/selector";
 import { LoadingSpinner } from "@/components/loading-spinner";
 
-// interface Course {
-//   id: string;
-//   userId: string;
-//   title: string;
-//   description: string;
-//   imageUrl: string;
-//   price: null;
-//   isPublished: null;
-//   categoryId: null;
-//   category: null;
-//   chapters: null;
-//   attachments: null;
-//   purchases: null;
-//   createdAt: null;
-//   updatedAt: null;
-// }
-
 const CourseIdPage = ({ params }: { params: { courseId: string } }) => {
-  // const {
-  //   isLoading,
-  //   data: course,
-  //   refetch,
-  // } = useGetAllCoursesQuery(
-  //   {},
-  //   { refetchOnMountOrArgChange: true } // TODO: figure out what this means
-  // );
-
-  // TODO: add this back in
-  // const categories = await db.category.findMany({
-  //   orderBy: {
-  //     name: "asc",
-  //   },
-  // });
-
-  // const yo = auth();
-  // console.log(yo);
-
   const { isLoading } = useGetCourseDetailsQuery(params.courseId);
   const course = useAppSelector(selectAllCourseData);
   const categories = useAppSelector(selectAllCategories);
-  // const auth = getAuth();
-
-  // console.log(auth);
-  // console.log(course);
-
-  // const course: Course & { chapters: Chapter[]; attachments: Attachment[] } =
-  //   data;
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  // const course = await db.course.findUnique({
-  //   where: {
-  //     id: params.courseId,
-  //     userId,
-  //   },
-  //   include: {
-  //     chapters: {
-  //       orderBy: {
-  //         position: "asc",
-  //       },
-  //     },
-  //     attachments: {
-  //       orderBy: {
-  //         createdAt: "desc",
-  //       },
-  //     },
-  //   },
-  // });
-  // if (!course) {
-  //   return redirect("/");
-  // }
-  // console.log(course);
 
   if (!isLoading && !course) {
     return redirect("/");
@@ -171,24 +100,6 @@ const CourseIdPage = ({ params }: { params: { courseId: string } }) => {
                     label: category.name,
                     value: category.id,
                   }))}
-                  // options={[
-                  //   {
-                  //     label: "First",
-                  //     value: "1",
-                  //   },
-                  //   {
-                  //     label: "Second",
-                  //     value: "2",
-                  //   },
-                  //   {
-                  //     label: "Third",
-                  //     value: "3",
-                  //   },
-                  //   {
-                  //     label: "Fourth",
-                  //     value: "4",
-                  //   },
-                  // ]}
                 />
               </div>
               <div className="space-y-6">

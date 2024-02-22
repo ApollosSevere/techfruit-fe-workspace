@@ -88,35 +88,3 @@ export interface StripeCustomer {
   createdAt: Date;
   updatedAt: Date;
 }
-
-
-        // <div key={review.id} className="mt-6 border bg-slate-100 rounded-md p-4">
-        //     <div className="font-medium flex items-center justify-between">
-        //     @ {review.user_name}
-        //     <Rating value={review.rating} />
-        //     <p className=""="text-xs text-muted-foreground mt-4">
-        //         {date.split(" ").splice(1).join(" ")}
-        //     </p>
-        //     {/* <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-        //         <svg
-        //         xmlns="http://www.w3.org/2000/svg"
-        //         width="24"
-        //         height="24"
-        //         viewBox="0 0 24 24"
-        //         fill="none"
-        //         stroke="currentColor"
-        //         stroke-width="2"
-        //         stroke-linecap="round"
-        //         stroke-linejoin="round"
-        //         className="h-4 w-4 mr-2"
-        //         >
-        //         <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-        //         <path d="m15 5 4 4"></path>
-        //         </svg>
-        //         Edit description
-        //     </button> */}
-        //             <p className="text-sm mt-2">{review.comment}</p>
-        //     {course.reviews.length > 1 && <hr />}
-        //     </div>
-    
-        // </div>

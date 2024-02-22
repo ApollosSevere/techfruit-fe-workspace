@@ -1,6 +1,5 @@
 "use client";
 
-import { z } from "zod";
 import axios from "axios";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -11,7 +10,7 @@ import {
   useFindCourseByPublishedChaptersAndUserIdQuery,
 } from "@/redux/courses/service/courseServiceEndpoints";
 import { useAppSelector } from "@/redux/utils/hooks";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Course, Purchase } from "@/redux/courses/slice/types";
 import { CourseProgress } from "@/components/course-progress";
 import { IconBadge } from "@/components/icon-badge";
@@ -19,48 +18,21 @@ import { formatPrice } from "@/lib/format";
 import { useMemo, useState } from "react";
 
 import { addProgress } from "@/redux/courses/slice/selector";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { selectUser, selectUserId } from "@/redux/auth/selector";
-
 import { RatingForm } from "../../teacher/courses/[courseId]/_components/review-form";
 
-interface ReviewFormProps {
-  initialData: Course;
-  courseId: string;
-}
-
-const formSchema = z.object({
-  rating: z.coerce.number(),
-  comment: z.string().min(1, {
-    message: "Review is required",
-  }),
-});
-
 const LandingPage = ({ params }: { params: { courseId: string } }) => {
-  // With redux, load the full thing here!
   const router = useRouter();
   const user = useAppSelector(selectUser);
   const userId = useAppSelector(selectUserId);
   const [isLoadingGlobal, setIsLoading] = useState(false);
   const [addPurchase] = useAddPurchaseMutation();
-  const [isEditing, setIsEditing] = useState(false);
-  const toggleEdit = () => setIsEditing((current) => !current);
 
-  const [addReviewToCourse] = useAddPurchaseMutation();
-
-  const {
-    isLoading,
-    data: course,
-    refetch,
-  } = useFindCourseByPublishedChaptersAndUserIdQuery(
-    {
+  const { isLoading, data: course } =
+    useFindCourseByPublishedChaptersAndUserIdQuery({
       courseId: params.courseId,
       userId,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
+    });
 
   const {
     id: courseId,
@@ -74,31 +46,9 @@ const LandingPage = ({ params }: { params: { courseId: string } }) => {
     description,
   }: Course = addProgress([course], userId)?.[0] || {};
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      rating: 0,
-      comment: "",
-    },
-  });
-
-  const { isSubmitting, isValid } = form.formState;
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      // await axios.patch(`/api/courses/${courseId}`, values);
-      // await editCourse({ courseId, values });
-      toast.success("Course updated");
-      toggleEdit();
-    } catch {
-      toast.error("Something went wrong");
-    }
-  };
-
   const onClick = async () => {
     try {
       setIsLoading(true);
-      console.log(courseId, userId, user, course);
 
       await addPurchase({ courseId, data: { userId: userId } });
 
@@ -123,12 +73,9 @@ const LandingPage = ({ params }: { params: { courseId: string } }) => {
   return isLoading ? (
     <LoadingSpinner />
   ) : (
-    // redirect(`/courses/${course?.id}/chapters/${course?.chapters[0].id}`)
     <div className="w-full">
       <div className="flex w-11/12 pt-6 mx-auto gap-4">
         <div className="w-7/12 mr-4">
-          {/* 70% width for the first section */}
-          {/* Your content for the first section */}{" "}
           <div className="relative w-full aspect-video rounded-md overflow-hidden">
             <Image fill className="object-cover" alt={title} src={imageUrl} />
           </div>
@@ -166,8 +113,6 @@ const LandingPage = ({ params }: { params: { courseId: string } }) => {
           </div>
         </div>
         <div className="w-5/12 ">
-          {/* 30% width for the second section */}
-          {/* Your content for the second section */}
           <div className="border rounded-md p-6 text-secondary bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-sky-900 via-sky-950 to-gray-900">
             {purchase ? (
               <>

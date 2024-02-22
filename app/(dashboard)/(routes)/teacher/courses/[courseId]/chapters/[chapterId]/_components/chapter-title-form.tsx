@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
@@ -38,7 +37,7 @@ export const ChapterTitleForm = ({
   chapterId,
 }: ChapterTitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editChapter, { isSuccess, error }] = useEditChapterMutation();
+  const [editChapter] = useEditChapterMutation();
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -53,11 +52,10 @@ export const ChapterTitleForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
       await editChapter({ courseId, chapterId, values });
+
       toast.success("Chapter updated");
       toggleEdit();
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     }

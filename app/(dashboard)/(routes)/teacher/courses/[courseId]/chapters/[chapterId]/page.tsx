@@ -1,10 +1,8 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 
-import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
@@ -22,29 +20,10 @@ const ChapterIdPage = ({
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  // const { userId } = auth();
   const chapter =
     useAppSelector(selectChapterData)?.find(
       (chapter) => chapter.id === params.chapterId
     ) || chapterInitialState;
-
-  // if (!userId) {
-  //   return redirect("/");
-  // }
-
-  // const chapter = await db.chapter.findUnique({
-  //   where: {
-  //     id: params.chapterId,
-  //     courseId: params.courseId,
-  //   },
-  //   include: {
-  //     muxData: true,
-  //   },
-  // });
-
-  // if (!chapter) {
-  //   return redirect("/");
-  // }
 
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
 

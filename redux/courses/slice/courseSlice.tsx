@@ -2,13 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { coursesApi } from "../service/courseServiceEndpoints";
 
 import { Course, Category, Chapter } from "./types";
-// & {
-//     chapters: (Chapter & {
-//       userProgress: UserProgress[] | null;
-//     })[];
-//   };
-
-// const yo = auth();
 
 export type AnalyticsCalc = {
   data: { [courseTitle: string]: number };
@@ -127,7 +120,6 @@ const courseSlice = createSlice({
       coursesApi.endpoints.findCourseByPublishedChaptersAndUserId
         .matchFulfilled,
       (state, action) => {
-        // console.log(action.payload);
         state.currentCourse = action.payload;
       }
     );
@@ -135,7 +127,6 @@ const courseSlice = createSlice({
     builder.addMatcher(
       coursesApi.endpoints.updateUserProgress.matchFulfilled,
       (state, action) => {
-        // console.log(action.payload);
         state.currentCourse = action.payload;
       }
     );

@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -19,9 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCreateCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { selectUserId } from "@/redux/auth/selector";
+import { useCreateCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -43,13 +42,12 @@ const CreatePage = () => {
       title: "",
     },
   });
+
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await createCourse({ userId, ...values }).unwrap();
-
-      // console.log(response);
 
       router.push(`/teacher/courses/${response?.id}`);
       toast.success("Course created");

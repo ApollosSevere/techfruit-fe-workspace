@@ -1,13 +1,11 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -16,6 +14,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
@@ -39,11 +38,9 @@ export const ChapterDescriptionForm = ({
   chapterId,
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editChapter, { isSuccess, error }] = useEditChapterMutation();
+  const [editChapter] = useEditChapterMutation();
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,11 +53,10 @@ export const ChapterDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
       await editChapter({ courseId, chapterId, values });
+
       toast.success("Chapter updated");
       toggleEdit();
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     }

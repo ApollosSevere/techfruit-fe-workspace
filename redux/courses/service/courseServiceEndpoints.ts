@@ -194,7 +194,6 @@ export const coursesApi = apiSlice.injectEndpoints({
     }),
 
     
-
     // getCourseContent: builder.query({
     //   query: (id) => ({
     //     url: `get-course-content/${id}`,
@@ -259,7 +258,6 @@ export const {
   useDeleteCourseMutation,
   useEditCourseMutation,
   useEditChapterMutation,
-//   useGetUsersAllCoursesQuery,
   useGetCourseDetailsQuery,
   useCreateChapterMutation,
   useDeleteDocumentItemMutation,

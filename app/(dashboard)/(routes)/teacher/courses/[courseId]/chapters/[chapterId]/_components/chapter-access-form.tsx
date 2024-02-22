@@ -1,13 +1,11 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -15,18 +13,12 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Editor } from "@/components/editor";
-import { Preview } from "@/components/preview";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  useEditChapterMutation,
-  useEditCourseMutation,
-} from "@/redux/courses/service/courseServiceEndpoints";
 import { Chapter } from "@/redux/courses/slice/types";
+import { useEditChapterMutation } from "@/redux/courses/service/courseServiceEndpoints";
 
 interface ChapterAccessFormProps {
   initialData: Chapter;
@@ -44,11 +36,9 @@ export const ChapterAccessForm = ({
   chapterId,
 }: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editChapter, { isSuccess, error }] = useEditChapterMutation();
+  const [editChapter] = useEditChapterMutation();
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,6 +52,7 @@ export const ChapterAccessForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await editChapter({ courseId, chapterId, values });
+
       toast.success("Chapter updated");
       toggleEdit();
     } catch {

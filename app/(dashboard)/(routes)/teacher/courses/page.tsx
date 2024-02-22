@@ -1,10 +1,5 @@
 "use client";
 
-// import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-
-import { db } from "@/lib/db";
-
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { useGetAllCoursesQuery } from "@/redux/courses/service/courseServiceEndpoints";
@@ -14,12 +9,8 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { Course } from "@/redux/courses/slice/types";
 
 const CoursesPage = () => {
-  // TODO: This query has to be user specific!
   const userId = useAppSelector(selectUserId);
-  const { isLoading, data, refetch } = useGetAllCoursesQuery(
-    userId,
-    { refetchOnMountOrArgChange: true } // TODO: figure out what this means
-  );
+  const { isLoading, data } = useGetAllCoursesQuery(userId);
 
   const courses: Course[] = data;
 

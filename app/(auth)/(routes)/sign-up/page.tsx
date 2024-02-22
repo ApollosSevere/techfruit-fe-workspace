@@ -1,10 +1,3 @@
-// import { SignUp } from "@clerk/nextjs";
-
-// export default function Page() {
-//   return <SignUp />;
-// }
-
-// pages/signup.js
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -30,9 +23,8 @@ const SignUp = () => {
   ) => {
     e.preventDefault();
     console.log("Signing up with:", { email, password });
-    // Perform the SignUp logic here, such as sending a request to your backend
 
-    // TODO: add enum for roles on front end boi! Maybe this can be done with the auto generate jawn
+    // TODO: use enum to store roles
     registerUser({
       firstName,
       lastName,
@@ -52,9 +44,8 @@ const SignUp = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
-        {/* Add your Sign Up form here */}
+
         <form>
-          {/* Form fields go here */}
           <div className="mb-4">
             <label
               htmlFor="first_name"

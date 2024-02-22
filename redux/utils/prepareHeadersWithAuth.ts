@@ -19,11 +19,10 @@ export const prepareHeadersWithAuth =
 
 
     if (token) {
-      // console.log("TOKEN FROM STATE ---->>>>", token, api.getState())
       headers.set('Authorization', `Bearer ${token}`);
     } else if (localStorageToken) {
-      // console.log("TOKEN FROM LOCAL_STORAGE ---->>>>", localStorageToken)
       headers.set('Authorization', `Bearer ${localStorageToken}`);
     }
+    
     return headers;
   };

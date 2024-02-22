@@ -1,11 +1,10 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
 import { useLogoutMutation } from "@/redux/authService/authServiceEndpoints";
 import { TOKEN } from "@/redux/auth/slice";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { selectAccessToken } from "@/redux/auth/selector";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export const LogoutDropdown = () => {
@@ -24,19 +23,6 @@ export const LogoutDropdown = () => {
     const savedToken = window.localStorage.getItem(TOKEN);
     setToken(savedToken);
   }, []);
-
-  // const handleLogout = async () => {
-  //   try {
-  //     const token = window.localStorage.getItem(TOKEN);
-  //     const payload = await logout(token || accessToken).unwrap();
-  //     console.log("fulfilled", payload);
-  //     window.localStorage.removeItem(TOKEN);
-  //     router.push("/sign-in");
-  //   } catch (error) {
-  //     console.error("rejected", error);
-  //   }
-  //   setIsOpen(false);
-  // };
 
   const handleLogout = useCallback(async () => {
     try {
@@ -88,35 +74,4 @@ export const LogoutDropdown = () => {
       )}
     </div>
   );
-
-  //   return (
-  //     <div className="relative inline-block text-left">
-  //       <div>
-  //         <button
-  //           type="button"
-  //           className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-  //           id="options-menu"
-  //           onClick={handleToggle}
-  //         >
-  //           <img
-  //             className="w-6 h-6 mr-2 rounded-full"
-  //             src="https://as2.ftcdn.net/v2/jpg/00/64/67/27/1000_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg" // Replace with your unknown user image source
-  //             alt="Unknown User"
-  //           />
-  //           Menu
-  //         </button>
-  //       </div>
-  //       {isOpen && (
-  //         <div className="absolute right-0 mt-2 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
-  //           <Link href="/"></Link>
-  //           <button
-  //             className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-  //             onClick={handleLogout}
-  //           >
-  //             Logout
-  //           </button>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
 };

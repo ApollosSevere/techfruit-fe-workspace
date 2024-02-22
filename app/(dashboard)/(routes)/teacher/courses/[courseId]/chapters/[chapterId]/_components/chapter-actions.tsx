@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -27,20 +26,16 @@ export const ChapterActions = ({
   isPublished,
 }: ChapterActionsProps) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [editChapter, { isSuccess, error }] = useEditChapterMutation();
+
+  const [editChapter, { isLoading: editLoading }] = useEditChapterMutation();
   const [deleteChapter, { isLoading: deleteLoading }] =
     useDeleteDocumentItemMutation();
 
   const onClick = async () => {
     try {
-      setIsLoading(true);
-
       if (isPublished) {
-        // await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
         toast.success("Chapter unpublished");
       } else {
-        // await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
         toast.success("Chapter published");
       }
       console.log(isPublished);
@@ -50,34 +45,23 @@ export const ChapterActions = ({
         chapterId,
         values: { isPublished: !isPublished },
       });
-
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const onDelete = async () => {
     try {
-      setIsLoading(true);
-
-      // await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
-
-      deleteChapter({
+      await deleteChapter({
         courseId,
         documentItemName: "chapters",
         itemId: chapterId,
       });
 
       toast.success("Chapter deleted");
-      // router.refresh();
       router.push(`/teacher/courses/${courseId}`);
     } catch {
       toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -85,14 +69,14 @@ export const ChapterActions = ({
     <div className="flex items-center gap-x-2">
       <Button
         onClick={onClick}
-        disabled={disabled || isLoading}
+        disabled={disabled || editLoading || deleteLoading}
         variant="outline"
         size="sm"
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoading}>
+        <Button size="sm" disabled={editLoading || deleteLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>

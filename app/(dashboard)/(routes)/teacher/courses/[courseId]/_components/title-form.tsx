@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -34,11 +33,9 @@ const formSchema = z.object({
 
 export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editCourse, { isSuccess, error }] = useEditCourseMutation();
+  const [editCourse] = useEditCourseMutation();
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

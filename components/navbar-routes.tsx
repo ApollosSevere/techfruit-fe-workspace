@@ -1,25 +1,17 @@
 "use client";
 
-// import { UserButton, useAuth } from "@clerk/nextjs";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 
 import { SearchInput } from "./search-input";
-import { useEffect } from "react";
-import { TOKEN } from "@/redux/auth/slice";
-import {
-  selectAccessToken,
-  selectIsTeacher,
-  selectUser,
-} from "@/redux/auth/selector";
+import { selectIsTeacher, selectUser } from "@/redux/auth/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
 import { LogoutDropdown } from "./logout";
 
 export const NavbarRoutes = () => {
-  // const { userId } = useAuth();
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
@@ -28,7 +20,6 @@ export const NavbarRoutes = () => {
 
   const isTeacher = useAppSelector(selectIsTeacher);
   const user = useAppSelector(selectUser);
-  // console.log(isTeacher, user);
 
   return (
     <>
@@ -53,8 +44,6 @@ export const NavbarRoutes = () => {
           </Link>
         ) : null}
         <LogoutDropdown />
-        {/* if the token is present and uuid == null, then yammean
-        /> */}
       </div>
     </>
   );

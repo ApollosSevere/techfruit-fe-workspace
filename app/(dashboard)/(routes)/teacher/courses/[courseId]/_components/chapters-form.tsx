@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2, PlusCircle } from "lucide-react";
@@ -61,12 +60,10 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // await axios.post(`/api/courses/${courseId}/chapters`, values);
       await createChapter({ courseId, values });
 
       toast.success("Chapter created");
       toggleCreating();
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     }
@@ -74,14 +71,9 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
-      console.log(updateData);
       setIsUpdating(true);
-
-      // await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
-      //   list: updateData,
-      // });
-
       await updateChapterPositions({ courseId, chapters: updateData });
+
       toast.success("Chapters reordered");
       router.refresh();
     } catch {

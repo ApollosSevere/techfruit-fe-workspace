@@ -12,10 +12,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { useAddReviewToCourseMutation } from "@/redux/courses/service/courseServiceEndpoints";
-import { Course, Purchase } from "@/redux/courses/slice/types";
+import { Purchase } from "@/redux/courses/slice/types";
 import { RatingSystem } from "./rating-system";
 import { selectUserId, selectUsername } from "@/redux/auth/selector";
 import { useAppSelector } from "@/redux/utils/hooks";
@@ -84,7 +83,7 @@ export const RatingForm = ({ purchased, courseId }: ReviewFormProps) => {
               <RatingSystem
                 rating={rating}
                 setRating={setRating}
-                numOfStars={5}
+                numOfStars={ratingNum}
               />
 
               <FormField

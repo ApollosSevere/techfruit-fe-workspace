@@ -1,12 +1,9 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
-import { Pencil, PlusCircle, ImageIcon, File, Loader2, X } from "lucide-react";
+import { PlusCircle, File, Loader2, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
@@ -32,42 +29,38 @@ export const AttachmentForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  const [createAttachment, { isLoading, isSuccess, error }] =
-    useCreateSubDocumentItemMutation();
+  const [createAttachment] = useCreateSubDocumentItemMutation();
+
   const [deleteCourse, { isLoading: deleteLoading }] =
     useDeleteDocumentItemMutation();
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const router = useRouter();
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // await axios.post(`/api/courses/${courseId}/attachments`, values);
-      // console.log({values});
       await createAttachment({
         documentItemName: "attachments", // TODO: make this value an Enum
         data: { courseId, name: values.url.split("/").pop(), ...values },
       });
+
       toast.success("Course updated");
       toggleEdit();
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     }
   };
 
-  const onDelete = (id: string) => {
+  const onDelete = async (id: string) => {
     try {
       setDeletingId(id);
-      // await axios.delete(`/api/courses/${courseId}/attachments/${id}`);
-      deleteCourse({
+
+      await deleteCourse({
         courseId,
         documentItemName: "attachments",
         itemId: id,
       });
+
       toast.success("Attachment deleted");
-      // router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {

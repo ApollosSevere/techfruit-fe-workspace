@@ -52,6 +52,7 @@ export const DescriptionForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await editCourse({ courseId, values });
+
       toast.success("Course updated");
       toggleEdit();
     } catch {
