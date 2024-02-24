@@ -20,8 +20,7 @@ export default function Children({ children }: { children: React.ReactNode }) {
     const localStorageToken = window.localStorage.getItem(TOKEN);
 
     setShowLogin(
-      !localStorageToken &&
-        !reduxToken &&
+      (!localStorageToken || !reduxToken) &&
         !["/sign-in", "/sign-up"].includes(pathname)
     );
 
@@ -44,7 +43,7 @@ export default function Children({ children }: { children: React.ReactNode }) {
     };
 
     checkToken();
-  }, [reduxToken, pathname, router, validateToken]);
+  }, [reduxToken, pathname, router, validateToken, showLogin]);
 
   return <>{showLogin ? <LoadingSpinner /> : children}</>;
 }
