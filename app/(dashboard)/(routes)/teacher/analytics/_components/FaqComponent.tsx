@@ -20,45 +20,6 @@ const FaqComponent: React.FC<FaqComponentProps> = ({ faqs }) => {
   console.log(faqs.length);
   return (
     <div className="max-w-md mx-auto">
-      <p>
-        {" "}
-        "Sure, I'd be happy to give you a bit of background. I'm Apollos Severe,
-        currently residing in Philadelphia. My professional journey has been
-        centered around technology, where I've honed my skills as a Full-Stack
-        Software Engineer. Throughout my career, I've worked with a variety of
-        programming languages and frameworks, from TypeScript and Java to React
-        and Ruby on Rails.
-      </p>
-      <p>
-        {" "}
-        My most recent role as a Software Engineer at Luma Financial
-        Technologies was particularly enriching. Here, I was deeply involved in
-        the development lifecycle, from initial conceptualization to deployment.
-        Collaborating closely with cross-functional teams, I led the
-        implementation of various features using cutting-edge technologies such
-        as React, Redux, and Spring Boot. This experience instilled in me a
-        strong sense of ownership and the ability to thrive in fast-paced,
-        collaborative environments.{" "}
-      </p>
-      <p>
-        I'm Apollos Severe, I started my working jorney as a Lumber Associate at
-        Home Depot. In this role, I developed strategic inventory management
-        techniques that resulted in significant reductions in excess stock and
-        increases in sales revenue. I also honed my customer service skills,
-        consistently achieving high satisfaction ratings while assisting
-        customers with their needs.
-      </p>
-      <p>
-        {" "}
-        My educational background includes a Bachelor of Science in Computer
-        Science from Cairn University. Additionally, I've undertaken various
-        personal projects, including the development and deployment of a
-        responsive portfolio website to showcase my work. I believe my diverse
-        experiences have equipped me with the leadership, problem-solving, and
-        adaptability skills necessary to excel as an Amazon Warehouse Area
-        Manager. I'm eager to bring my expertise to your team and contribute to
-        the continued success of Amazon's operations."{" "}
-      </p>
       {faqs.map((faq, index) => (
         <div key={index} className="mb-2">
           {/* Add margin-bottom to create space between FAQ items */}
